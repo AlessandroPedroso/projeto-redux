@@ -3,7 +3,7 @@ import styles from "./address.module.css";
 import { Header } from "../../components/header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addAddress } from "../../redux/user/slice";
+import { addAddress, deleteAddress } from "../../redux/user/slice";
 
 export function Address() {
   const dispatch = useDispatch();
@@ -24,6 +24,13 @@ export function Address() {
     console.log(addressName, addressNumber);
   }
 
+  function handleDeleteAddress() {
+    dispatch(deleteAddress());
+    alert("Deletado com sucesso");
+    setAddressName("");
+    setAddressNumber("");
+  }
+
   return (
     <>
       <Header />
@@ -31,6 +38,15 @@ export function Address() {
         <main className={styles.content}>
           <div>
             <Link to="/painel">Voltar para o painel</Link>
+
+            {user && user?.address && (
+              <button
+                className={styles.buttonDelete}
+                onClick={handleDeleteAddress}
+              >
+                Deletar endereço!
+              </button>
+            )}
           </div>
 
           <section className={styles.address}>

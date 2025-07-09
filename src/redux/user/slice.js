@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   totalALunos: 12,
+  users: [],
+  loading: false,
 };
 
 export const userSlice = createSlice({
@@ -57,9 +59,55 @@ export const userSlice = createSlice({
         },
       };
     },
+    deleteAddress: (state) => {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          address: null,
+        },
+      };
+    },
+    fetchUsers: (state) => {
+      console.log("CHAMOU NOSSO FETCH USERS");
+      state.loading = true;
+    },
+    fetchUsersSuccess: (state, action) => {
+      console.log("CAIU NA SUCCESS");
+      console.log(action.payload);
+
+      state.users = action.payload;
+      state.loading = false;
+    },
+    fetchUsersFailure: (state, action) => {
+      console.log("CAIU NA FAILURE");
+      console.log(action.payload);
+      state.loading = false;
+    },
+    fetchUserById: (state) => {
+      console.log("CHAMOU NO SLICE");
+    },
+    fetchUserByIdSuccess: (state, action) => {
+      console.log("User do id");
+      console.log(action.payload);
+    },
+    fetchUserByIdFailure: (state) => {
+      console.log("DEU ERRO NO fetchById");
+    },
   },
 });
 
-export const { createUser, logoutUser, addAddress } = userSlice.actions;
+export const {
+  createUser,
+  logoutUser,
+  addAddress,
+  deleteAddress,
+  fetchUsers,
+  fetchUsersSuccess,
+  fetchUsersFailure,
+  fetchUserById,
+  fetchUserByIdSuccess,
+  fetchUserByIdFailure,
+} = userSlice.actions;
 
 export default userSlice.reducer;
